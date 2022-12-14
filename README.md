@@ -21,11 +21,11 @@ You can use `docker-data/` to test the program, or can put your own data there. 
 
 `docker-composer.conf` parameters:
 - `compose-path`: The path to the folder containing the folders for each docker container - the folder for each container includes a `docker-compose.yml` file.
-  - **If you use relative paths**, use the folder you're in as `/`. For example, using the folder `docker-data` would be either `/docker-data` or `/path/to/this/repo/docker-data`. You can also have a "/" on the end of those paths, if you'd like; it's not required.
 - `exclude-containers`: A list of containers to exclude from being managed by the program. This will stop the program from doing **anything** to those containers.
 
 Notes:
 - The folders *must* have the same name as their respective docker containers
+- Remember to run the script as a user that can access `docker `
 
 
 ## Dev Notes
