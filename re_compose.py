@@ -11,6 +11,8 @@ compose_path = config.readline()
 compose_path = compose_path[compose_path.find('=')+1:].strip()
 if compose_path[-1:] != '/':
     compose_path += '/'
+if compose_path[1] != '/':
+    compose_path = f'{working_dir}/{compose_path}'
 
 exclude_containers = config.readline()
 exclude_containers = [container.strip() for container \
