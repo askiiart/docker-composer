@@ -30,8 +30,7 @@ if debug:
 
 # COMPOSE!
 for dir in compose_dirs:
-    container_name = dir[:-1]
-    container_name = container_name[container_name.rfind('/')+1:]
+    container_name = dir[:-1][dir[:-1].rfind('/')+1:]
     if debug:
         print('Compose dir: ' + dir)
         print('Container name: ' + container_name)
