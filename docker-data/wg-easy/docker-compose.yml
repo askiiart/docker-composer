@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    wg-easy:
+        container_name: wg-easy
+        environment:
+            - WG_HOST=localhost
+            - PASSWORD=password
+        volumes:
+            - '~/.wg-easy:/etc/wireguard'
+        ports:
+            - '51820:51820/udp'
+            - '51821:51821/tcp'
+        restart: unless-stopped
+        image: weejewel/wg-easy
