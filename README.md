@@ -34,5 +34,4 @@ Notes:
 ## Status
 - `composer.py` and `re_compose` are finished
 - Redoing stuff as a new class `docker_parser.py`
-  - ps() is done
-  - container_info() still a WIP
+  - functions probably done, need to adjust scripts to use `docker_parser.py`
