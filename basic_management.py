@@ -10,7 +10,7 @@ def docker_info():
     """
     raw_info = getoutput('docker ps')
     # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
-    header = raw_info[:raw_info.find('\n')]
+    header = raw_info[:raw_info.find('\n')+1]
     header_temp = header
     header_indices = {}
     while '  ' in header_temp:  # Split header
@@ -28,21 +28,24 @@ def docker_info():
         containers.append(line.strip()[line.strip().rfind(' ')+1:])
     
     # Fill in info
-    for container in containers:
-        info[container] = {}
+    for i in range(len(containers)):
+        info[containers[i]] = {}
         for column in header_indices:
             end_i = header_indices[column] + len(column)
-            info[container][column] = header[header_indices[column]:end_i]
+            info[containers[i]][column] = raw_info[i][header_indices[column]:end_i]
     
     debug = True
     if debug:
-        print('Raw info:\n', raw_info)
-        print('Header:\n', header)
-        print('Header indices:\n', header_indices)
-        print('Containers:\n', containers)
-        print('Info:\n', info)
+        print('Raw info:\n', raw_info, '\n')
+        print('Header:\n', header, '\n')
+        print('Header indices:\n', header_indices, '\n')
+        print('Containers:\n', containers, '\n')
+        print('Info:\n', info, '\n')
 
     return info
 
 
+if '\n' not in getoutput('docker ps'):
+    print('No containers running')
+    exit()
 docker_info()
