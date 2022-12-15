@@ -11,9 +11,9 @@ def docker_info():
     raw_info = getoutput('docker ps')
     # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
     header = raw_info[:raw_info.find('\n')+1]
-    header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'), 'COMMAND': header.find('COMMAND'), \
-        'CREATED': header.find('CREATED'), \
-        'STATUS': header.find('STATUS'), 'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
+    header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'), \
+        'COMMAND': header.find('COMMAND'), 'CREATED': header.find('CREATED'), 'STATUS': header.find('STATUS'), \
+        'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
 
     # Remove header (example above)
     raw_info = raw_info[raw_info.find('\n')+1:]
