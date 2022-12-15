@@ -13,7 +13,6 @@ class Docker:
         """
         if '\n' not in raw_info:
             raise(NoContainersError('A Docker container is required to run this program. Please create a docker container and try again.'))
-        raw_info = getoutput('docker ps')
         # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
         header = raw_info[:raw_info.find('\n')+1]
         header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'),
@@ -44,14 +43,28 @@ class Docker:
 
         return info
     
-    def container_list(raw_info=getoutput('docker container list')):
+    def containers(raw_info=getoutput('docker container list')):
+        """
+        :return: A list of docker containers
+        """
+        # Remove header
+        raw_info = raw_info[raw_info.find('\n')+1:]
+        info = {}
+
+        # Find container names
+        containers = []
+        for line in raw_info.split('\n'):
+            containers.append(line.strip()[line.strip().rfind(' ')+1:])
+        
+        return containers
+    
+    def container_info(raw_info=getoutput('docker container list')):
         """
         Gets info about all the Docker containers
         :return: Nested dict of containers info
         """
         if '\n' not in raw_info:
             raise(NoContainersError('A Docker container is required to run this program. Please create a docker container and try again.'))
-        raw_info = getoutput('docker container list')
         # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
         header = raw_info[:raw_info.find('\n')+1]
         header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'),
