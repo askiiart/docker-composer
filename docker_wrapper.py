@@ -58,7 +58,7 @@ class Docker:
         
         return containers
     
-    def container_info(raw_info=getoutput('docker container list')):
+    def all_containers_info(raw_info=getoutput('docker container list')):
         """
         Gets info about all the Docker containers
         :return: Nested dict of containers info
@@ -94,6 +94,17 @@ class Docker:
                     raw_info.split('\n')[i][start_i:end_i].strip()
 
         return info
+
+    def container_info(container):
+        """
+        Returns the info about a given container
+        :parameters:
+        container: The container you want info about
+
+        :returns:
+        dict: The info about the container 
+        """
+        return Docker.all_containers_info()[container]
     
     def compose(dir):
         """
