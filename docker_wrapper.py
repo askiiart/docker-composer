@@ -2,8 +2,10 @@ from subprocess import getoutput, getstatusoutput
 import pprint
 import os
 
+
 class NoContainersError(Exception):
     pass
+
 
 class Docker:
     @staticmethod
@@ -14,12 +16,13 @@ class Docker:
         """
         raw_info = getoutput('docker ps')
         if '\n' not in raw_info:
-            raise(NoContainersError('A running Docker container is required to run this program. Please run a docker container and try again.'))
+            raise (NoContainersError(
+                'A running Docker container is required to run this program. Please run a docker container and try again.'))
         # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
         header = raw_info[:raw_info.find('\n')+1]
         header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'),
-                        'COMMAND': header.find('COMMAND'), 'CREATED': header.find('CREATED'), 'STATUS': header.find('STATUS'),
-                        'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
+                          'COMMAND': header.find('COMMAND'), 'CREATED': header.find('CREATED'), 'STATUS': header.find('STATUS'),
+                          'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
 
         # Remove header (example above)
         raw_info = raw_info[raw_info.find('\n')+1:]
@@ -44,8 +47,7 @@ class Docker:
                     raw_info.split('\n')[i][start_i:end_i].strip()
 
         return info
-    
-    
+
     @staticmethod
     def containers():
         """
@@ -54,7 +56,8 @@ class Docker:
         """
         raw_info = getoutput('docker container list')
         if '\n' not in raw_info:
-            raise(NoContainersError('A Docker container is required to run this program. Please create a docker container and try again.'))
+            raise (NoContainersError(
+                'A Docker container is required to run this program. Please create a docker container and try again.'))
         # Remove header
         raw_info = raw_info[raw_info.find('\n')+1:]
         info = {}
@@ -63,9 +66,9 @@ class Docker:
         containers = []
         for line in raw_info.split('\n'):
             containers.append(line.strip()[line.strip().rfind(' ')+1:])
-        
+
         return containers
-    
+
     @staticmethod
     def all_containers_info():
         """
@@ -74,12 +77,13 @@ class Docker:
         """
         raw_info = getoutput('docker ps -a')
         if '\n' not in raw_info:
-            raise(NoContainersError('A Docker container is required to run this program. Please create a docker container and try again.'))
+            raise (NoContainersError(
+                'A Docker container is required to run this program. Please create a docker container and try again.'))
         # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
         header = raw_info[:raw_info.find('\n')+1]
         header_indices = {'CONTAINER ID': header.find('CONTAINER ID'), 'IMAGE': header.find('IMAGE'),
-                        'COMMAND': header.find('COMMAND'), 'CREATED': header.find('CREATED'), 'STATUS': header.find('STATUS'),
-                        'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
+                          'COMMAND': header.find('COMMAND'), 'CREATED': header.find('CREATED'), 'STATUS': header.find('STATUS'),
+                          'PORTS': header.find('PORTS'), 'NAMES': header.find('NAMES')}
 
         # Remove header (example above)
         raw_info = raw_info[raw_info.find('\n')+1:]
@@ -116,7 +120,7 @@ class Docker:
         dict: The info about the container 
         """
         return Docker.all_containers_info()[container]
-    
+
     @staticmethod
     def compose(dir):
         """
@@ -129,10 +133,10 @@ class Docker:
         """
         cwd = os.getcwd()
         os.chdir(dir)
-        status = getstatusoutput('docker compose up -detach --build --remove-orphans')
+        status = getstatusoutput('docker compose up --detach --build --remove-orphans')
         os.chdir(cwd)
         return status
-    
+
     @staticmethod
     def start(container):
         """
@@ -144,7 +148,7 @@ class Docker:
         int: The exit code of docker start
         """
         return getstatusoutput(f'docker start {container}')[0]
-    
+
     @staticmethod
     def stop(container):
         """
@@ -156,7 +160,7 @@ class Docker:
         int: The exit code of docker stop
         """
         return getstatusoutput(f'docker stop {container}')[0]
-    
+
     @staticmethod
     def rm(container):
         """
@@ -168,6 +172,24 @@ class Docker:
         int: The exit code of docker rm
         """
         return getstatusoutput(f'docker rm {container}')[0]
+
+    @staticmethod
+    def containers_exist():
+        """
+        Checks if any containers exist
+        :returns:
+        bool: True if containers exist, False otherwise
+        """
+        return True if '\n' in getoutput('docker ps -a') else False
+
+
+def aliens_exist():
+    """
+    Checks if aliens exist
+    :returns:
+    bool: Up all night long; And there's something very wrong
+    """
+    return True if 'blink-182' in 'your playlist' else False
 
 
 if __name__ == '__main__':
