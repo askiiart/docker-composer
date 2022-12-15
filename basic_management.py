@@ -37,14 +37,14 @@ while True:
 
         elif selection == 'start':
             status = Docker.start(container)
-            if status == '0':
+            if status == 0:
                 print(f'{container} started successfully')
             else:
                 print(f'{container} did NOT start successfully. Exit code: {status}')
 
         elif selection == 'stop':
             status = Docker.stop(container)
-            if status == '0':
+            if status == 0:
                 print(f'{container} stopped successfully')
             else:
                 print(f'{container} was NOT stopped successfully. Exit code: {status}')
@@ -57,10 +57,12 @@ while True:
                 if selection == 'y' or selection == 'Y':
                     print('Deleting...')
                     status = Docker.rm(container)
-                    # TODO: Add status logic
+                    if status == 0:
+                            print(f'{container} has been deleted')
                     print('Done')
                 elif selection == 'n' or selection == 'N':
                     print(f'Operation cancelled, returning to {container} menu...')
+            break
 
         elif selection == 'menu':
             print('Returning to main menu...')
