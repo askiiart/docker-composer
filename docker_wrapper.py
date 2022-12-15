@@ -129,7 +129,7 @@ class Docker:
         """
         cwd = os.getcwd()
         os.chdir(dir)
-        status = getstatusoutput('docker compose up -d')
+        status = getstatusoutput('docker compose up -detach --build --remove-orphans')
         os.chdir(cwd)
         return status
     
