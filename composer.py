@@ -1,5 +1,4 @@
 import os
-from subprocess import getoutput
 from docker_wrapper import Docker
 
 # Read config file and make variables
@@ -32,6 +31,4 @@ for dir in compose_dirs:
 for i in range(len(compose_dirs)):
     dir = compose_dirs[i]
     container = containers[i]
-    status = Docker.stop(container)  # Assigned to vars so I can see 
-    status = Docker.rm(container)
-    status = Docker.compose(dir)
+    Docker.compose(dir)
