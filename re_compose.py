@@ -1,5 +1,5 @@
 import os
-from subprocess import getoutput
+from docker_wrapper import Docker
 
 debug = False
 
@@ -23,6 +23,9 @@ for dir in os.listdir(compose_path):
     if os.path.isdir(compose_path + dir) and dir not in exclude_containers:
         compose_dirs.append(compose_path + dir + '/')
 
+containers = [dir[:-1][dir[:-1].rfind('/')+1:] for dir in compose_dirs]
+
+
 # Print debug info
 if debug:
     print('Working directory: ' + working_dir)
@@ -32,28 +35,23 @@ if debug:
 
 running = True
 while running:
-    containers = [dir[:-1][dir[:-1].rfind('/')+1:] for dir in compose_dirs]
     # Menu
     print('What Docker container would you like to (re-)compose?')
-    print('(q) - quit')
     for i in range(len(containers)):
-        print(f'({i}) - {containers[i]}')
+        print(f'  {i} - {containers[i]}')
+    print('  q - quit')
+
     to_compose_i = input()
     if to_compose_i == 'q':
         exit(0)
     to_compose_i = int(to_compose_i)
 
     # COMPOSE!
-    container_name = containers[to_compose_i]
-    if debug:
-        print('Container name: ' + container_name)
-    getoutput(f'docker stop {container_name}')
-    getoutput(f'docker rm {container_name}')
-
-    os.chdir(compose_dirs[to_compose_i])
-    output = getoutput('docker compose up -d')
-    if debug:
-        print(output)
+    container = containers[to_compose_i]
+    container_dir = compose_dirs[to_compose_i]
+    Docker.stop(container)
+    Docker.rm(container)
+    Docker.compose(container_dir)
     
     print('\nWould you like to (re-)compose another container? (y/N)')
     running = True if input() == 'y' else False

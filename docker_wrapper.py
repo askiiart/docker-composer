@@ -117,7 +117,7 @@ class Docker:
         """
         cwd = os.getcwd()
         os.chdir(dir)
-        status = getstatusoutput('docker ps')
+        status = getstatusoutput('docker compose up -d')
         os.chdir(cwd)
         return status
     

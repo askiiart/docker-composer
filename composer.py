@@ -1,7 +1,6 @@
 import os
 from subprocess import getoutput
-
-debug = True
+from docker_wrapper import Docker
 
 # Read config file and make variables
 config = open('docker-composer.conf', 'rt')
@@ -23,23 +22,20 @@ for dir in os.listdir(compose_path):
     if os.path.isdir(compose_path + dir) and dir not in exclude_containers:
         compose_dirs.append(compose_path + dir + '/')
 
-# Print debug info
-if debug:
-    print('Working directory: ' + working_dir)
-    print('Compose path: ' + compose_path)
-    print('Exclude containers: ' + str(exclude_containers))
-    print('Compose directories: ' + str(compose_dirs))
+containers = []
+for dir in compose_dirs:
+    containers.append()
 
 # COMPOSE!
-for dir in compose_dirs:
-    container_name = dir[:-1][dir[:-1].rfind('/')+1:]
-    if debug:
-        print('Compose dir: ' + dir)
-        print('Container name: ' + container_name)
-    getoutput(f'docker stop {container_name}')
-    getoutput(f'docker rm {container_name}')
-
-    os.chdir(dir)
-    output = getoutput('docker compose up -d')
-    if debug:
-        print(output)
+for i in range(len(compose_dirs)):
+    dir = compose_dirs[i]
+    container = containers[i]
+    status = Docker.stop(container)  # Assigned to vars so I can see 
+    if status != 0:
+        print(f'Error in stopping {container}, skipping...')
+    status = Docker.rm(container)
+    if status != 0:
+        print(f'Error in removing {container}, skipping...')
+    status = Docker.compose(dir)
+    if status != 0:
+        print(f'Error in composing {container}, skipping...')
