@@ -33,4 +33,6 @@ Notes:
 
 ## Status
 - `composer.py` and `re_compose` are finished
-- Haven't started on `basic_management.py`
+- Redoing stuff as a new class `docker_parser.py`
+  - ps() is done
+  - container_info() still a WIP
