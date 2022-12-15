@@ -35,3 +35,4 @@ Notes:
 - `composer.py` and `re_compose` are finished
 - Redoing stuff as a new class `docker_parser.py`
   - functions probably done, need to adjust scripts to use `docker_parser.py`
+Test
