@@ -5,7 +5,7 @@ class NoContainersError(Exception):
     pass
 
 class DockerParser:
-    def ps(raw_info='docker ps'):
+    def ps(raw_info=getoutput('docker ps')):
         """
         Gets info about all running Docker containers from docker ps
         :return: Nested dict of containers info
@@ -38,7 +38,7 @@ class DockerParser:
                     end_i = header_indices[header_indices_keys[j+1]]
                 else:
                     end_i = len(header)
-                info[containers[i]][header_indices[header_indices_keys[j]]] = \
+                info[containers[i]][header_indices_keys[j]] = \
                     raw_info.split('\n')[i][start_i:end_i].strip()
 
         return info
@@ -50,7 +50,7 @@ class DockerParser:
         """
         if '\n' not in raw_info:
             raise(NoContainersError('A Docker container is required to run this program. Please create a docker container and try again.'))
-        raw_info = getoutput('docker ps')
+        raw_info = getoutput('docker container list')
         # Header: "CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES" (with way more spaces)
         header = raw_info[:raw_info.find('\n')+1]
         header_temp = header
