@@ -1,7 +1,6 @@
 from docker_wrapper import Docker
 from pprint import pprint
 
-# Goals: Loop: Select container (or exit), then menu to do stuff to container (start, stop, rm, list info, go back to main menu)
 while True:
     # Main Menu
     print('Select the container to manage:')
@@ -10,46 +9,43 @@ while True:
         print(f'  {i} - {containers[i]}')
     print('  q - quit')
     
-    selection = input()
+    container_i = input()
     print()
 
-    if selection == 'q':
+    if container_i == 'q':
         exit(0)
     
     while True:
         # Container Menu
-        container = containers[int(selection)]
+        container = containers[int(container_i)]
         print()
         print(f'You selected {container}. What would you like to do with it?')
-        print(f'  view - View container info - (docker {container} list)')
+        print(f'  view - View container info - (docker ps -a)')
         print(f'  start - Starts the container (docker start {container})')
         print(f'  stop - Stops the container (docker stop {container}')
         print(f'  rm - Deletes the container (docker rm {container})')
         print( '  menu - Back to the main menu')
     
         selection = input()
+        print()
 
         if selection == 'menu':
             break
 
         elif selection == 'view':
-            pprint(Docker.container_info(container))  # TODO: Make better, custom printer later
+            pprint(Docker.container_info(container))  # TODO: Make better, custom printer
 
         elif selection == 'start':
+            print('Starting...')
             status = Docker.start(container)
-            if status == 0:
-                print(f'{container} started successfully')
-            else:
-                print(f'{container} did NOT start successfully. Exit code: {status}')
-
+            
         elif selection == 'stop':
+            print('Stopping...')
             status = Docker.stop(container)
-            if status == 0:
-                print(f'{container} stopped successfully')
-            else:
-                print(f'{container} was NOT stopped successfully. Exit code: {status}')
-
+            print('Done.')
+            
         elif selection == 'rm':
+            break_later = False
             while selection != 'y' and selection != 'n' and selection != 'Y' and selection != 'N':
                 print(f'WARNING! This will DELETE {container}!')
                 print(f'Are you absolutely sure you want to delete {container}? (y/N)')
@@ -57,12 +53,12 @@ while True:
                 if selection == 'y' or selection == 'Y':
                     print('Deleting...')
                     status = Docker.rm(container)
-                    if status == 0:
-                            print(f'{container} has been deleted')
                     print('Done')
+                    break_later = True
                 elif selection == 'n' or selection == 'N':
                     print(f'Operation cancelled, returning to {container} menu...')
-            break
+            if break_later:
+                break
 
         elif selection == 'menu':
             print('Returning to main menu...')

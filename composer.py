@@ -24,18 +24,14 @@ for dir in os.listdir(compose_path):
 
 containers = []
 for dir in compose_dirs:
-    containers.append()
+    container = dir[:-1]
+    container = container[container.rfind('/')+1:]
+    containers.append(container)
 
 # COMPOSE!
 for i in range(len(compose_dirs)):
     dir = compose_dirs[i]
     container = containers[i]
     status = Docker.stop(container)  # Assigned to vars so I can see 
-    if status != 0:
-        print(f'Error in stopping {container}, skipping...')
     status = Docker.rm(container)
-    if status != 0:
-        print(f'Error in removing {container}, skipping...')
     status = Docker.compose(dir)
-    if status != 0:
-        print(f'Error in composing {container}, skipping...')
