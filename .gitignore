@@ -1,3 +1,4 @@
 docker-composer.conf
 .vscode/*
 __pycache__/*
+docker_data/*
