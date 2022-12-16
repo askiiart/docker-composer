@@ -12,7 +12,7 @@ This is a simple program to manage docker containers. It works similarly to Umbr
 
 ## Installation
 
-I'll get to this later once this program is actually usable.
+I'll get to this later today, probably. I'm a bit busy right now.
 
 You can use `docker-data/` to test the program, or can put your own data there. `docker-composer.conf` is already set up to use that directory!
 
@@ -25,13 +25,8 @@ You can use `docker-data/` to test the program, or can put your own data there. 
 
 Notes:
 - The folders *must* have the same name as their respective docker containers
-- Remember to run the script as a user that can access `docker `
+- Remember to run the script as a user that can access Docker engine
 
-
-## Dev Notes
-- Maybe later expand this to an interactive docker manager.
 
 ## Status
-- `composer.py` and `re_compose` are finished
-- Redoing stuff as a new class `docker_parser.py`
-  - functions probably done, need to adjust scripts to use `docker_parser.py`
+- All scripts are complete and working! Feel free to use this now.
