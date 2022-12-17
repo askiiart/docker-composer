@@ -12,9 +12,7 @@ This is a simple program to manage docker containers. It works similarly to Umbr
 
 ## Installation
 
-I'll get to this later today, probably. I'm a bit busy right now.
-
-You can use `docker-data/` to test the program, or can put your own data there. `docker-composer.conf` is already set up to use that directory!
+Just put these scripts somewhere, and run them as needed. Remember to edit the `docker-composer.conf` file to your needs - parameters below, in [Usage](https://github.com/askiiart/docker-composer/edit/master/README.md#usage)
 
 
 ## Usage
