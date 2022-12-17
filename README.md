@@ -21,7 +21,7 @@ You can use `docker-data/` to test the program, or can put your own data there. 
 
 `docker-composer.conf` parameters:
 - `compose-path`: The path to the folder containing the folders for each docker container - the folder for each container includes a `docker-compose.yml` file.
-- `exclude-containers`: A list of containers to exclude from being managed by the program. This will stop the program from doing **anything** to those containers.
+- `exclude-containers`: A list of containers to exclude from being managed by the program. This will stop the scripts (except `basic_management.py`) from doing **anything** to those containers.
 
 Notes:
 - The folders *must* have the same name as their respective docker containers
