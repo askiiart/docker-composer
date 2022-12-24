@@ -31,4 +31,6 @@ for dir in compose_dirs:
 for i in range(len(compose_dirs)):
     dir = compose_dirs[i]
     container = containers[i]
+    print(f'COMPOSING {container}...')
     Docker.compose(dir)
+    print('DONE!')
