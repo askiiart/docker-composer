@@ -1,6 +1,6 @@
 # Docker Composer
 
-This is a simple program to manage docker containers. It works similarly to Umbrel, but it is not limited to Umbrel. It can be used to manage any docker container.
+This is a simple program to manage docker containers. It works similarly to Umbrel's scripts, but is not limited to Umbrel. It's really just for convenience.
 
 
 ## How to use
