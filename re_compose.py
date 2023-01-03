@@ -20,7 +20,7 @@ in exclude_containers[exclude_containers.find('=')+1:].split(',')]
 
 compose_dirs = []
 for dir in os.listdir(compose_path):
-    if os.path.isdir(compose_path + dir) and dir not in exclude_containers:
+    if os.path.isdir(compose_path + dir) and dir not in exclude_containers and dir[0] != '.':
         compose_dirs.append(compose_path + dir + '/')
 
 containers = [dir[:-1][dir[:-1].rfind('/')+1:] for dir in compose_dirs]
