@@ -105,3 +105,6 @@ except NoContainersError as e:
     print('Error:', e)
     print('No containers found. Exiting...')
     exit()
+
+    #AAAAAAAAAAAAAAAA
+    print('hi')
